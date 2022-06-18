@@ -6,6 +6,7 @@
 require_relative "miwifi/version"
 require_relative "miwifi/extensions"
 require_relative "miwifi/router"
+require_relative "miwifi/api"
 
 module Miwifi
 

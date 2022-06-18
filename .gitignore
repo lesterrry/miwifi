@@ -9,3 +9,4 @@
 /.gem
 *.bin
 *.lock
+*.gem
