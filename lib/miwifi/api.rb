@@ -1,16 +1,20 @@
-# 
-# COPYRIGHT LESTER COVEY,
+# Handcrafted by Aydar N.
+# 2022-2023
 #
-# 2022
+# me@aydar.media
+#
+
+# frozen_string_literal: true
 
 module Miwifi
 
 	class Router
 		def device_list
-			if @token.nil? then raise Miwifi::NoTokenError end
+			raise Miwifi::NoTokenError if @token.nil?
+
 			uri = URI.parse("http://#{@ip}/cgi-bin/luci/;stok=#{@token}/api/misystem/devicelist")
-			r = Request::default(uri, false)
-			return Request.json_make(r, uri)
+			r = Request.default(uri, false)
+			Request.json_make(r, uri)
 		end
 	end
 
@@ -20,9 +24,10 @@ module Miwifi
 				http.request(r)
 			end
 			parsed = JSON.parse(response.body)
-			if parsed["code"] == 401 then raise Miwifi::AccessDeniedError
-			elsif parsed["code"] != 0 then raise Miwifi::UnexpectedResponseCodeError end
-			return parsed
+			raise Miwifi::AccessDeniedError if parsed['code'] == 401
+			raise Miwifi::UnexpectedResponseCodeError if parsed['code'] != 0
+
+			parsed
 		end
 	end
 

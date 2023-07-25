@@ -1,10 +1,11 @@
-# 
-# COPYRIGHT LESTER COVEY,
+# Handcrafted by Aydar N.
+# 2022-2023
 #
-# 2022
+# me@aydar.media
+#
+
+# frozen_string_literal: true
 
 module Miwifi
-
-	VERSION = "0.1.0-beta.2"
-	
+	VERSION = '0.1.0'
 end
