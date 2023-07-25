@@ -10,9 +10,19 @@ module Miwifi
 
 	class Router
 		def device_list
+			generic_api_request "http://#{@ip}/cgi-bin/luci/;stok=#{@token}/api/misystem/devicelist"
+		end
+
+		def reboot
+			generic_api_request "http://#{@ip}/cgi-bin/luci/;stok=#{@token}/api/misystem/reboot"
+		end
+
+			private
+
+		def generic_api_request(uri_string)
 			raise Miwifi::NoTokenError if @token.nil?
 
-			uri = URI.parse("http://#{@ip}/cgi-bin/luci/;stok=#{@token}/api/misystem/devicelist")
+			uri = URI.parse(uri_string)
 			r = Request.default(uri, false)
 			Request.json_make(r, uri)
 		end
