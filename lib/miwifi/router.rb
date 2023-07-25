@@ -16,11 +16,11 @@ module Miwifi
 	class Router
 		attr_reader :token
 
-		def initialize(ip, password, username = 'admin')
+		def initialize(ip, password, username = 'admin', token: nil)
 			@ip = ip
 			@password = password
 			@username = username
-			@token = nil
+			@token = token
 		end
 
 		def auth
