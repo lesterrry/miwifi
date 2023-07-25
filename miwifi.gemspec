@@ -1,38 +1,34 @@
-# 
-# COPYRIGHT LESTER COVEY,
-#
-# 2022
+# frozen_string_literal: true
 
-require_relative "lib/miwifi/version"
+lib = File.expand_path('lib', __dir__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'miwifi/version'
 
 Gem::Specification.new do |spec|
-	spec.name = "miwifi"
-	spec.version = Miwifi::VERSION
-	spec.authors = ["Lester Covey"]
-	spec.email = ["me@lestercovey.ml"]
+	spec.name          = 'miwifi'
+	spec.version       = Miwifi::VERSION
+	spec.authors       = ['Aydar N.']
+	spec.email         = ['me@aydar.media']
 
-	spec.summary = "API wrapper for MiWIFI routers (beta)"
-	spec.description = "Provides authentication methods as well as some simple API calls"
-	spec.homepage = "https://github.com/lesterrry/miwifi"
-	spec.license = "BSL-1.0"
-	spec.required_ruby_version = ">= 2.6.0"
+	spec.required_ruby_version = '>= 2.6.3'
 
-	spec.metadata["allowed_push_host"] = "https://rubygems.pkg.github.com/lesterrry"
-
-	spec.metadata["homepage_uri"] = spec.homepage
-	spec.metadata["source_code_uri"] = "https://github.com/lesterrry/miwifi"
+	spec.summary       = 'API wrapper for MiWIFI routers'
+	spec.description   = 'Provides authentication methods as well as some simple API calls'
+	spec.homepage      = 'https://github.com/lesterrry/miwifi'
+	spec.license       = 'MIT'
 
 	# Specify which files should be added to the gem when it is released.
 	# The `git ls-files -z` loads the files in the RubyGem that have been added into git.
-	spec.files = Dir.chdir(__dir__) do
-		`git ls-files -z`.split("\x0").reject do |f|
-			(f == __FILE__) || f.match(%r{\A(?:(?:bin|test|spec|features)/|\.(?:git|travis|circleci)|appveyor)})
-		end
+	spec.files         = Dir.chdir(File.expand_path(__dir__)) do
+		`git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
 	end
-	spec.bindir = "exe"
-	spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
-	spec.require_paths = ["lib"]
+	spec.bindir        = 'exe'
+	spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+	spec.require_paths = ['lib']
 
-	# For more information and examples about making a new gem, check out our
-	# guide at: https://bundler.io/guides/creating_gem.html
+	spec.add_development_dependency 'bundler', '>= 2.2.33'
+	spec.add_development_dependency 'irb'
+	spec.add_development_dependency 'minitest', '~> 5.0'
+	spec.add_development_dependency 'rake', '~> 13.0'
+	spec.add_development_dependency 'rubocop'
 end
