@@ -14,7 +14,7 @@ $token = nil
 
 Minitest::Test.i_suck_and_my_tests_are_order_dependent!
 
-# Tests token retrieving
+# Tests token retrieving and basic requests
 class MiwifiBasicTest < Minitest::Test
 
 	def test_incorrect_auth
@@ -42,6 +42,22 @@ class MiwifiBasicTest < Minitest::Test
 		list = router.device_list
 
 		refute_empty list
+	end
+
+end
+
+# Tests token caching
+class MiwifiCacheTest < Minitest::Test
+
+	def test_token_cache
+		file = './test_token.bin'
+		router = Miwifi::Router.new('1.1.1.1', '1234', token: '4321')
+		router.bury_token file
+
+		new_router = Miwifi::Router.new('1.1.1.1', '1234')
+		new_router.restore_token file
+
+		assert_equal '4321', new_router.token
 	end
 
 end
