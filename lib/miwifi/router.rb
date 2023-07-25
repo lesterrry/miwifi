@@ -14,6 +14,8 @@ require 'json'
 module Miwifi
 
 	class Router
+		attr_reader :token
+
 		def initialize(ip, password, username = 'admin')
 			@ip = ip
 			@password = password
@@ -29,7 +31,7 @@ module Miwifi
 			end
 			# TODO: This is unsafe as hell but bruh nobody even pays me
 			key = response.body.between("key: '", "',")
-			iv = response.body.between("iv: '", "',")
+			# iv = response.body.between("iv: '", "',")
 			device_id = response.body.between("deviceId = '", "';")
 			time = Time.now.to_i
 			random = rand(1000..9000)
@@ -55,6 +57,7 @@ module Miwifi
 
 		def bury_token(file)
 			raise Miwifi::NoTokenError if @token.nil?
+
 			File.open(file, 'wb') do |f|
 				f.write(Marshal.dump(@token))
 			end
